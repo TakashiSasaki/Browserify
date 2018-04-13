@@ -1,8 +1,9 @@
+console.log("entryMain.js\t: start");
+
 function entryMain(){
   console.log("entryMain.js#entryMain\t: I'm entryMain() in entryMain.js.");
 }
 
-console.log("entryMain.js\t: I'm bare code line in entryMain.js.");
 
 function entryRequire(){
 	console.log("entryMain.js#entryRequire\t: require('./hello')");
@@ -11,3 +12,4 @@ function entryRequire(){
   var goodbyeRequire = require("./goodbye");
 }
 
+console.log("entryMain.js\t: end");

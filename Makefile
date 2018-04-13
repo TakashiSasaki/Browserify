@@ -26,15 +26,15 @@ entryYes.tmp: hello.js goodbye.js entryMain.js
 entryNo.tmp : hello.js goodbye.js entryMain.js
 	browserify -o $@ $^ 
 
-test-entryYes: entryYes.js
+entryYesTest: entryYesTest.js entryYes.js
 	$(NODE) $<
 
-test-entryNo: entryNo.js
+entryNoTest: entryNoTest.js entryNo.js
 	$(NODE) $<
 
-test-entry: test-entryYes test-entryNo
+test-entry: entryYesTest entryNoTest
 
-diff-entry: entryNo.js entryYes.js
+diff-entry: entryYes.js entryNo.js
 	diff -w $^
 
 requireYes.tmp: hello.js goodbye.js requireMain.js
