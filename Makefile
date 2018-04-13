@@ -1,9 +1,7 @@
 .PHONY: test prepare browserified push pull clean all test-entry diff-entry
 NODE=NODE_PATH=$(NODE_PATH):. node
 
-all: test 
-
-test: browserified
+all: test-standalone test-require test-entry
 
 push: $(BROWSERIFIED)
 	clasp push
