@@ -5,11 +5,6 @@ all: test
 
 test: browserified
 
-BROWSERIFIED=browserified.js browserified-target.js browserified-require.js \
-						 browserified-standalone.js browserified-standalone-target.js browserified-standalone-require.js \
-						 entry.js noentry.js
-
-
 push: $(BROWSERIFIED)
 	clasp push
 
@@ -17,7 +12,7 @@ pull:
 	clasp pull
 
 clean:
-	@rm -rf $(BROWSERIFIED) tmp.js *.tmp
+	@rm -rf entryYes.js entryNo.js standaloneYes.js standaloneNo.js requireYes.js requireNo.js tmp.js *.tmp
 
 prepare:
 	sudo n stable ;\
@@ -26,8 +21,6 @@ prepare:
 
 %.js: %.tmp
 	@js-beautify -f $< -o $@
-
-browserified:  $(BROWSERIFIED)
 
 entryYes.tmp: hello.js goodbye.js entryMain.js
 	browserify -e entryMain -o $@ $^
@@ -44,7 +37,7 @@ test-entryNo: entryNo.js
 test-entry: test-entryYes test-entryNo
 
 diff-entry: entryNo.js entryYes.js
-	diff $^
+	diff -w $^
 
 requireYes.tmp: hello.js goodbye.js requireMain.js
 	browserify -r ./hello.js -r ./goodbye.js -o $@ requireMain.js 
@@ -61,32 +54,22 @@ test-requireNo: requireNo.js
 test-require: test-requireYes test-requireNo
 
 diff-require: requireYes.js requireNo.js
-	diff $^
+	diff -w $^
 
-test-browserified-require: test-browserified-require.js browserified-require.js
-	@$(NODE) $<
+standaloneNo.tmp: hello.js goodbye.js standaloneMain.js
+	browserify -o $@ $^ 
 
-browserified-target.js: hello.js goodbye.js
-	browserify -r ./hello.js:hellotarget -r ./goodbye.js:goodbyetarget -o tmp.js empty.js ;\
-	js-beautify -f tmp.js -o $@ ;\
-	$(NODE) $@
+standaloneYes.tmp: hello.js goodbye.js standaloneMain.js
+	browserify -s standaloneYes -o $@ $^ 
 
-browserified-standalone-require.js: hello.js goodbye.js
-	browserify -s greeting -r ./hello.js -r ./goodbye.js -o tmp.js empty.js ;\
-	js-beautify -f tmp.js -o $@ ;\
-	$(NODE) $@
+test-standaloneNo: standaloneNo.js
+	$(NODE) $<
 
-browserified-standalone-target.js: hello.js goodbye.js
-	browserify -s greeting -r ./hello.js:hellotarget -r ./goodbye.js:goodbyetarget -o tmp.js empty.js ;\
-	js-beautify -f tmp.js -o $@ ;\
-	$(NODE) $@
+test-standaloneYes: standaloneYes.js
+	$(NODE) $<
 
-browserified-standalone.js: hello.js goodbye.js empty.js
-	browserify -s greeting -o tmp.js $^ ;\
-	js-beautify -f tmp.js -o $@ ;\
-	$(NODE) $@
+test-standalone: test-standaloneYes test-standaloneNo
 
-browserified.js: hello.js goodbye.js empty.js
-	browserify -o tmp.js $^ ;\
-	js-beautify -f tmp.js -o $@ ;\
-	$(NODE) $@
+diff-standalone: standaloneYes.js standaloneNo.js
+	diff -w $^
+
