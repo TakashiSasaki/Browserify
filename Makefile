@@ -25,32 +25,46 @@ prepare:
 		sudo npm -g install browserify js-beautify js-prettify @google/clasp
 
 %.js: %.tmp
-	js-beautify -f $< -o $@
+	@js-beautify -f $< -o $@
 
 browserified:  $(BROWSERIFIED)
 
 entryYes.tmp: hello.js goodbye.js entryMain.js
 	browserify -e entryMain -o $@ $^
 
-test-entryYes: entryYes.js
-	$(NODE) $<
-
 entryNo.tmp : hello.js goodbye.js entryMain.js
 	browserify -o $@ $^ 
+
+test-entryYes: entryYes.js
+	$(NODE) $<
 
 test-entryNo: entryNo.js
 	$(NODE) $<
 
+test-entry: test-entryYes test-entryNo
+
 diff-entry: entryNo.js entryYes.js
 	diff $^
 
-require.js: hello.js goodbye.js empty.js
-	browserify -r ./hello.js -r ./goodbye.js -o tmp.js empty.js ;\
-	js-beautify -f tmp.js -o $@ ;\
-	$(NODE) $@
+requireYes.tmp: hello.js goodbye.js requireMain.js
+	browserify -r ./hello.js -r ./goodbye.js -o $@ requireMain.js 
+
+requireNo.tmp: hello.js goodbye.js requireMain.js
+	browserify -o $@ requireMain.js 
+
+test-requireYes: requireYes.js
+	$(NODE) $<
+
+test-requireNo: requireNo.js
+	$(NODE) $<
+
+test-require: test-requireYes test-requireNo
+
+diff-require: requireYes.js requireNo.js
+	diff $^
 
 test-browserified-require: test-browserified-require.js browserified-require.js
-	$(NODE) $<
+	@$(NODE) $<
 
 browserified-target.js: hello.js goodbye.js
 	browserify -r ./hello.js:hellotarget -r ./goodbye.js:goodbyetarget -o tmp.js empty.js ;\
