@@ -1,5 +1,6 @@
 /*.swp
 /*.swo
+/*.tmp
 assert.js
 tmp.js
 browserified-require.js
@@ -8,3 +9,5 @@ browserified-standalone-require.js
 browserified-standalone-target.js
 browserified.js
 browserified-target.js
+entryNo.js
+entryYes.js
