@@ -38,13 +38,13 @@ diff-entry: entryYes.js entryNo.js
 	diff -w $^
 
 requireYes.tmp: requireMain.js hello.js goodbye.js
-	browserify -r ./hello.js -r ./goodbye.js -o $@ $<
+	browserify -o $@ $< -r ./hello.js -r ./goodbye.js
 
 requireNo.tmp: requireMain.js hello.js goodbye.js
 	browserify -o $@ $<
 
-targetYes.tmp: targetMain.js hello.js goodbye.js
-	browserify -o -r ./hello.js:helloTarget -r ./goodbye.js:goodbyeTarget  $@ $<
+targetYes.tmp: requireMain.js hello.js goodbye.js
+	browserify -o $@ $< -r ./hello.js:helloTarget -r ./goodbye.js:goodbyeTarget
 
 requireYesTest: requireYesTest.js requireYes.js
 	$(NODE) $<
@@ -53,13 +53,18 @@ requireYesTest: requireYesTest.js requireYes.js
 requireNoTest: requireNoTest.js requireNo.js
 	$(NODE) $<
 
-targetYesTest: targetYesTest.js targetYes.js
-	$(NODE) $<
-
 test-require: requireYesTest requireNoTest
 
 diff-require: requireYes.js requireNo.js
-	diff -w $^
+	diff -w -B $^
+
+targetYesTest: targetYesTest.js targetYes.js
+	$(NODE) $<
+
+test-target: targetYesTest
+
+diff-target: targetYes.js requireYes.js
+	diff -w -B $^
 
 standaloneNo.tmp: hello.js goodbye.js standaloneMain.js
 	browserify -o $@ $^ 
