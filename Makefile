@@ -37,19 +37,26 @@ test-entry: entryYesTest entryNoTest
 diff-entry: entryYes.js entryNo.js
 	diff -w $^
 
-requireYes.tmp: hello.js goodbye.js requireMain.js
-	browserify -r ./hello.js -r ./goodbye.js -o $@ requireMain.js 
+requireYes.tmp: requireMain.js hello.js goodbye.js
+	browserify -r ./hello.js -r ./goodbye.js -o $@ $<
 
-requireNo.tmp: hello.js goodbye.js requireMain.js
-	browserify -o $@ requireMain.js 
+requireNo.tmp: requireMain.js hello.js goodbye.js
+	browserify -o $@ $<
 
-test-requireYes: requireYes.js
+targetYes.tmp: targetMain.js hello.js goodbye.js
+	browserify -o -r ./hello.js:helloTarget -r ./goodbye.js:goodbyeTarget  $@ $<
+
+requireYesTest: requireYesTest.js requireYes.js
 	$(NODE) $<
 
-test-requireNo: requireNo.js
+
+requireNoTest: requireNoTest.js requireNo.js
 	$(NODE) $<
 
-test-require: test-requireYes test-requireNo
+targetYesTest: targetYesTest.js targetYes.js
+	$(NODE) $<
+
+test-require: requireYesTest requireNoTest
 
 diff-require: requireYes.js requireNo.js
 	diff -w $^
