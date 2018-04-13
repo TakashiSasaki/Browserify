@@ -60,13 +60,13 @@ standaloneNo.tmp: hello.js goodbye.js standaloneMain.js
 standaloneYes.tmp: hello.js goodbye.js standaloneMain.js
 	browserify -s standaloneYes -o $@ $^ 
 
-test-standaloneNo: standaloneNo.js
+standaloneNoTest: standaloneNoTest.js standaloneNo.js
 	$(NODE) $<
 
-test-standaloneYes: standaloneYes.js
+standaloneYesTest: standaloneYesTest.js standaloneYes.js
 	$(NODE) $<
 
-test-standalone: test-standaloneYes test-standaloneNo
+test-standalone: standaloneYesTest standaloneNoTest
 
 diff-standalone: standaloneYes.js standaloneNo.js
 	diff -w $^
