@@ -37,7 +37,7 @@ browserified-require.js: hello.js goodbye.js
 	 	js-beautify -f tmp.js -o $@
 
 browserified-target.js: hello.js goodbye.js
-	browserify -r ./hello.js:hello -r ./goodbye.js:goodbye -o tmp.js empty.js ;\
+	browserify -r ./hello.js:hellotarget -r ./goodbye.js:goodbyetarget -o tmp.js empty.js ;\
 	 	js-beautify -f tmp.js -o $@
 
 browserified-standalone-require.js: hello.js goodbye.js
@@ -45,7 +45,7 @@ browserified-standalone-require.js: hello.js goodbye.js
 	 	js-beautify -f tmp.js -o $@
 
 browserified-standalone-target.js: hello.js goodbye.js
-	browserify -s greeting -r ./hello.js:hello -r ./goodbye.js:goodbye -o tmp.js empty.js ;\
+	browserify -s greeting -r ./hello.js:hellotarget -r ./goodbye.js:goodbyetarget -o tmp.js empty.js ;\
 	 	js-beautify -f tmp.js -o $@
 
 browserified-standalone.js: hello.js goodbye.js
@@ -55,10 +55,3 @@ browserified-standalone.js: hello.js goodbye.js
 browserified.js: hello.js goodbye.js
 	browserify -o tmp.js $^ ;\
 	 	js-beautify -f tmp.js -o $@
-
-merge:
-	git merge github/SurfacePro4 ;\
-		git merge github/SurfacePro5 ;\
-		git merge github/sasaki64 ;\
-		git merge github/master
-
