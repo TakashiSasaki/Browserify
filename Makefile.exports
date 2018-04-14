@@ -6,4 +6,9 @@ exportsYes.tmp: exportsMain.js modules/hello.js modules/goodbye.js
 exportsYes: exportsYes.js
 	$(NODE) $<
 
-exports: exportsYes
+exportsDiff: entryNo.js exportsYes.js
+	-diff -w -B -c $^
+
+exports: exportsYes exportsDiff
+
+
