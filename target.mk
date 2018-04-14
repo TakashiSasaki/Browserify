@@ -1,4 +1,4 @@
-targetYes.tmp: requireMain.js modules/hello.js modules/goodbye.js
+targetYes.ugly: requireMain.js modules/hello.js modules/goodbye.js
 	browserify -o $@ $< -r ./modules/hello.js:helloTarget -r ./modules/goodbye.js:goodbyeTarget
 
 targetYes: targetYes.js

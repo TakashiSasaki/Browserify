@@ -1,7 +1,8 @@
 /*.swp
 /*.swo
 /*.tmp
-/*.beautified
+/*.ugly
+/*.beautiful
 /*.patched
 /*.rej
 entryNo.js

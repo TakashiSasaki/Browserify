@@ -1,7 +1,7 @@
-entryYes.tmp: entryMain.js modules/hello.js modules/goodbye.js
+entryYes.ugly: entryMain.js modules/hello.js modules/goodbye.js
 	browserify -o $@ -e entryMain $^
 
-entryNo.tmp : entryMain.js modules/hello.js modules/goodbye.js
+entryNo.ugly: entryMain.js modules/hello.js modules/goodbye.js
 	browserify -o $@ $^
 
 entryYes: entryYes.js

@@ -1,9 +1,9 @@
 # Makefile-standalone
 
-standaloneNo.tmp: standaloneMain.js modules/hello.js modules/goodbye.js
+standaloneNo.ugly: standaloneMain.js modules/hello.js modules/goodbye.js
 	browserify -o $@ $^ 
 
-standaloneYes.tmp: standaloneMain.js modules/hello.js modules/goodbye.js
+standaloneYes.ugly: standaloneMain.js modules/hello.js modules/goodbye.js
 	browserify -s standaloneYes -o $@ $^ 
 
 standaloneNo: standaloneNo.js

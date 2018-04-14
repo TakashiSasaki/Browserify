@@ -1,6 +1,6 @@
 # Makefile.exports
 
-exportsYes.tmp: exportsMain.js modules/hello.js modules/goodbye.js
+exportsYes.ugly: exportsMain.js modules/hello.js modules/goodbye.js
 	browserify -o $@ $^
 
 exportsYes: exportsYes.js
