@@ -19,7 +19,7 @@ standaloneYesTest: standaloneYesTest.js standaloneYes.js
 	$(NODE) $<
 
 standaloneDiff: standaloneNo.js standaloneYes.js
-	diff -w -B -c $^
+	-diff -w -B -c $^
 
 standalone: standaloneNo standaloneYes standaloneNoTest standaloneYesTest standaloneDiff
 

@@ -17,7 +17,7 @@ requireYesTest: requireYesTest.js requireYes.js
 	$(NODE) $<
 
 requireDiff: requireNo.js requireYes.js
-	diff -w -B -c $^
+	-diff -w -B -c $^
 
 require: requireNo requireYes requireNoTest requireYesTest requireDiff
 

@@ -16,8 +16,8 @@ entryYesTest: entryYesTest.js entryYes.js
 entryNoTest: entryNoTest.js entryNo.js
 	$(NODE) $<
 
-entry: entryYes entryNo entryYesTest entryNoTest
-
 entryDiff: entryYes.js entryNo.js
-	diff -w -B -c $^
+	-diff -w -B -c $^
+
+entry: entryYes entryNo entryYesTest entryNoTest
 

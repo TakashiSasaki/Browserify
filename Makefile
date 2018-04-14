@@ -4,7 +4,7 @@
 
 NODE=NODE_PATH=$(NODE_PATH):. node
 
-all: entry test-standalone test-require
+all: entry require target standalone
 
 push: $(BROWSERIFIED)
 	clasp push
