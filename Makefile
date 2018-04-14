@@ -1,7 +1,10 @@
-.PHONY: test prepare browserified push pull clean all test-entry diff-entry
+.PHONY: prepare push pull clean all 
+.SUFFIXES: .patched .tmp .js .beautified
+.INTERMEDIATE: entryYes.tmp entryNo.tmp
+
 NODE=NODE_PATH=$(NODE_PATH):. node
 
-all: test-standalone test-require test-entry
+all: entry entryTest test-standalone test-require
 
 push: $(BROWSERIFIED)
 	clasp push
@@ -10,21 +13,33 @@ pull:
 	clasp pull
 
 clean:
-	@rm -rf entryYes.js entryNo.js standaloneYes.js standaloneNo.js requireYes.js requireNo.js tmp.js *.tmp
+	@rm -rf entryYes.js entryNo.js standaloneYes.js standaloneNo.js requireYes.js requireNo.js tmp.js *.tmp *.beautified *.patched
 
 prepare:
 	sudo n stable ;\
 		sudo npm -g update ;\
 		sudo npm -g install browserify js-beautify js-prettify @google/clasp
 
-%.js: %.tmp
-	@js-beautify -f $< -o $@
+.tmp.beautified:
+	js-beautify -f $< -o $@
 
-entryYes.tmp: hello.js goodbye.js entryMain.js
-	browserify -e entryMain -o $@ $^
+.beautified.patched:
+	patch -o $@ $< $*.patch
 
-entryNo.tmp : hello.js goodbye.js entryMain.js
-	browserify -o $@ $^ 
+.patched.js:
+	js-beautify -f $< -o $@
+
+entryYes.tmp: entryMain.js modules/hello.js modules/goodbye.js
+	browserify -o $@ -e entryMain $^
+
+entryNo.tmp : entryMain.js modules/hello.js modules/goodbye.js
+	browserify -o $@ $^
+
+entryYes: entryYes.js
+	$(NODE) $<
+
+entryNo: entryNo.js
+	$(NODE) $<
 
 entryYesTest: entryYesTest.js entryYes.js
 	$(NODE) $<
@@ -32,13 +47,16 @@ entryYesTest: entryYesTest.js entryYes.js
 entryNoTest: entryNoTest.js entryNo.js
 	$(NODE) $<
 
-test-entry: entryYesTest entryNoTest
+entry: entryYes entryNo entryYesTest entryNoTest
 
-diff-entry: entryYes.js entryNo.js
-	diff -w $^
+entryDiff: entryYes.js entryNo.js
+	diff -w -B $^
 
-requireYes.tmp: requireMain.js hello.js goodbye.js
-	browserify -o $@ $< -r ./hello.js -r ./goodbye.js
+requireYes.tmp: requireMain.js modules/hello.js modules/goodbye.js
+	browserify -o $@ $< -r ./modules/hello.js -r ./modules/goodbye.js
+
+requireYes: requireYes.js
+	$(NODE) $<
 
 requireNo.tmp: requireMain.js hello.js goodbye.js
 	browserify -o $@ $<

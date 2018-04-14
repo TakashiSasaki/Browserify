@@ -1,0 +1,16 @@
+*** entryYes.js	2018-04-14 08:16:17.532681900 +0900
+--- a.js	2018-04-14 08:15:59.173967600 +0900
+***************
+*** 1,6 ****
+--- 1,11 ----
+  (function() {
+      function r(e, n, t) {
++ 			  console.log("r\t: e = " + JSON.stringify(e));
++ 			  console.log("r\t: n = " + JSON.stringify(n));
++ 			  console.log("r\t: t = " + JSON.stringify(t));
+          function o(i, f) {
++ 					  console.log("o\t: i = " + JSON.stringify(i));
++ 					  console.log("o\t: f = " + JSON.stringify(f));
+              if (!n[i]) {
+                  if (!e[i]) {
+                      var c = "function" == typeof require && require;
