@@ -4,20 +4,20 @@ requireYes.tmp: requireMain.js modules/hello.js modules/goodbye.js
 requireNo.tmp: requireMain.js modules/hello.js modules/goodbye.js
 	browserify -o $@ $<
 
-requireYes: requireYes.js
-	$(NODE) $<
-
 requireNo: requireNo.js
 	$(NODE) $<
 
-requireYesTest: requireYesTest.js requireYes.js
+requireYes: requireYes.js
 	$(NODE) $<
 
 requireNoTest: requireNoTest.js requireNo.js
 	$(NODE) $<
 
-test-require: requireYesTest requireNoTest
+requireYesTest: requireYesTest.js requireYes.js
+	$(NODE) $<
 
-diff-require: requireYes.js requireNo.js
-	diff -w -B $^
+requireDiff: requireNo.js requireYes.js
+	diff -w -B -c $^
+
+require: requireNo requireYes requireNoTest requireYesTest requireDiff
 
