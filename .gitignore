@@ -3,6 +3,7 @@
 /*.tmp
 /*.beautified
 /*.patched
+/*.rej
 entryNo.js
 entryYes.js
 requireNo.js

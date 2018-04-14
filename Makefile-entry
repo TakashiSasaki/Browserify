@@ -1,0 +1,23 @@
+entryYes.tmp: entryMain.js modules/hello.js modules/goodbye.js
+	browserify -o $@ -e entryMain $^
+
+entryNo.tmp : entryMain.js modules/hello.js modules/goodbye.js
+	browserify -o $@ $^
+
+entryYes: entryYes.js
+	$(NODE) $<
+
+entryNo: entryNo.js
+	$(NODE) $<
+
+entryYesTest: entryYesTest.js entryYes.js
+	$(NODE) $<
+
+entryNoTest: entryNoTest.js entryNo.js
+	$(NODE) $<
+
+entry: entryYes entryNo entryYesTest entryNoTest
+
+entryDiff: entryYes.js entryNo.js
+	diff -w -B -c $^
+
