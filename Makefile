@@ -30,6 +30,7 @@ prepare:
 	js-beautify -f $< -o $@
 
 include Makefile-entry
+include Makefile.exports
 include Makefile-require
 include Makefile-target
 include Makefile-standalone
