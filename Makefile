@@ -4,7 +4,7 @@
 
 NODE=NODE_PATH=$(NODE_PATH):. node
 
-all: entry require target standalone
+all: entry exports require target standalone
 
 push: $(BROWSERIFIED)
 	clasp push
@@ -29,9 +29,9 @@ prepare:
 .patched.js:
 	js-beautify -f $< -o $@
 
-include Makefile-entry
-include Makefile.exports
-include Makefile-require
-include Makefile-target
-include Makefile-standalone
+include entry.mk
+include exports.mk
+include require.mk
+include target.mk
+include standalone.mk
 
