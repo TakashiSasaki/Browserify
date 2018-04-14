@@ -50,7 +50,7 @@ entryNoTest: entryNoTest.js entryNo.js
 entry: entryYes entryNo entryYesTest entryNoTest
 
 entryDiff: entryYes.js entryNo.js
-	diff -w -B $^
+	diff -w -B -c $^
 
 requireYes.tmp: requireMain.js modules/hello.js modules/goodbye.js
 	browserify -o $@ $< -r ./modules/hello.js -r ./modules/goodbye.js
@@ -58,8 +58,11 @@ requireYes.tmp: requireMain.js modules/hello.js modules/goodbye.js
 requireYes: requireYes.js
 	$(NODE) $<
 
-requireNo.tmp: requireMain.js hello.js goodbye.js
+requireNo.tmp: requireMain.js modules/hello.js modules/goodbye.js
 	browserify -o $@ $<
+
+requireNo: requireNo.js
+	$(NODE) $<
 
 targetYes.tmp: requireMain.js hello.js goodbye.js
 	browserify -o $@ $< -r ./hello.js:helloTarget -r ./goodbye.js:goodbyeTarget

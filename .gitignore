@@ -1,6 +1,7 @@
 /*.swp
 /*.swo
 /*.tmp
+/*.beautified
 assert.js
 tmp.js
 browserified-require.js
