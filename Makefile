@@ -4,7 +4,7 @@
 
 NODE=NODE_PATH=$(NODE_PATH):. node
 
-all: entry entryTest test-standalone test-require
+all: entry test-standalone test-require
 
 push: $(BROWSERIFIED)
 	clasp push
@@ -55,21 +55,20 @@ entryDiff: entryYes.js entryNo.js
 requireYes.tmp: requireMain.js modules/hello.js modules/goodbye.js
 	browserify -o $@ $< -r ./modules/hello.js -r ./modules/goodbye.js
 
-requireYes: requireYes.js
-	$(NODE) $<
-
 requireNo.tmp: requireMain.js modules/hello.js modules/goodbye.js
 	browserify -o $@ $<
+
+targetYes.tmp: requireMain.js modules/hello.js modules/goodbye.js
+	browserify -o $@ $< -r ./modules/hello.js:helloTarget -r ./modules/goodbye.js:goodbyeTarget
+
+requireYes: requireYes.js
+	$(NODE) $<
 
 requireNo: requireNo.js
 	$(NODE) $<
 
-targetYes.tmp: requireMain.js hello.js goodbye.js
-	browserify -o $@ $< -r ./hello.js:helloTarget -r ./goodbye.js:goodbyeTarget
-
 requireYesTest: requireYesTest.js requireYes.js
 	$(NODE) $<
-
 
 requireNoTest: requireNoTest.js requireNo.js
 	$(NODE) $<
