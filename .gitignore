@@ -5,6 +5,7 @@
 /*.beautiful
 /*.patched
 /*.rej
+/*.bundled
 entryNo.js
 entryYes.js
 requireNo.js

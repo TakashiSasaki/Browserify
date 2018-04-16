@@ -1,10 +1,10 @@
 .PHONY: prepare push pull clean all 
-.SUFFIXES: .patched .ugly .js .beautiful
+.SUFFIXES: .patched .ugly .js .beautiful .bundled .nodejs
 .INTERMEDIATE: entryYes.tmp entryNo.tmp
 
 NODE=NODE_PATH=$(NODE_PATH):. node
 
-all: entry exports require target standalone
+all: entry standalone require target
 
 push: $(BROWSERIFIED)
 	clasp push
@@ -26,12 +26,13 @@ prepare:
 .beautiful.patched:
 	patch -o $@ $< $*.patch
 
-.patched.js:
+.patched.bundled:
 	js-beautify -f $< -o $@
 
 include entry.mk
-include exports.mk
+include standalone.mk
 include require.mk
 include target.mk
-include standalone.mk
 
+
+# ugly => beautiful => patched => bundled

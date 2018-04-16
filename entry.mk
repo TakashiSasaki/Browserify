@@ -4,20 +4,14 @@ entryYes.ugly: entryMain.js modules/hello.js modules/goodbye.js
 entryNo.ugly: entryMain.js modules/hello.js modules/goodbye.js
 	browserify -o $@ $^
 
-entryYes: entryYes.js
+entryNo: entryNo.nodejs entryNo.bundled
 	$(NODE) $<
 
-entryNo: entryNo.js
+entryYes: entryYes.nodejs entryYes.bundled
 	$(NODE) $<
 
-entryYesTest: entryYesTest.js entryYes.js
-	$(NODE) $<
-
-entryNoTest: entryNoTest.js entryNo.js
-	$(NODE) $<
-
-entryDiff: entryYes.js entryNo.js
+entryDiff: entryYes.bundled entryNo.bundled
 	-diff -w -B -c $^
 
-entry: entryYes entryNo entryYesTest entryNoTest
+entry: entryYes entryNo entryYes entryNo
 

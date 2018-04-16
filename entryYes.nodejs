@@ -1,21 +1,24 @@
-const PREFIX = "entryNoTest.js";
+const PREFIX = "entryYesTest.nodejs";
 function log(s){
   console.log(PREFIX + "\t: " + s);
 }
 
 log("start");
-log("require ./entryYes");
-requireResult = require("./entryNo");
+
+log("require ./entryYes.bundled");
+requireResult = require("./entryYes.bundled");
 log("requireResult has " + JSON.stringify(Object.keys(requireResult)));
 log("entryMainFunction = " + typeof entryMainFunction);
 
+
 log("hello = " + typeof hello); 
 log("helloRequiredResult has " + JSON.stringify(Object.keys(helloRequiredResult))); 
-log("helloRequired.hello()");
+log("helloRequiredResult.hello()");
 helloRequiredResult.hello();
 
-log("hello = " + typeof goodbye); 
-log("goodbyeRequiredResult has " + Object.keys(goodbyeRequiredResult)); 
+
+log("goodbye = " + typeof goodbye)
+log("goodbyeRequiredResult has " + JSON.stringify(Object.keys(goodbyeRequiredResult))); 
 log("goodbyeRequiredResult.goodbye()");
 goodbyeRequiredResult.goodbye();
 log("end");
