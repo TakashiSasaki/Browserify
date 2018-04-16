@@ -7,16 +7,16 @@ function log(s) {
 log("start");
 
 log("requiring ./modules/hello.js");
-helloRequiredResult = require("./modules/hello.js");
+helloRequireResult = require("./modules/hello.js");
 log("typeof hello = " + typeof hello);
-log("typeof helloRequiredResult = " + typeof helloRequiredResult);
-log("keys of helloRequiredResult = " + Object.keys(helloRequiredResult));
+log("typeof helloRequireResult = " + typeof helloRequireResult);
+log("keys of helloRequireResult = " + Object.keys(helloRequireResult));
 
 log("requiring ./modules/goodbye.js");
-goodbyeRequiredResult = require("./modules/goodbye.js");
+goodbyeRequireResult = require("./modules/goodbye.js");
 log("typeof goodbye = " + typeof goodbye);
-log("typeof goodbyeRequiredResult = " + typeof goodbyeRequiredResult);
-log("keys of goodbyeRequiredResult = " + Object.keys(goodbyeRequiredResult));
+log("typeof goodbyeRequireResult = " + typeof goodbyeRequireResult);
+log("keys of goodbyeRequireResult = " + Object.keys(goodbyeRequireResult));
 
 function entryMainFunction(){
   const PREFIX = "entryMainFunction";
@@ -24,10 +24,10 @@ function entryMainFunction(){
     console.log(PREFIX + "\t: " + s);
   }
   log("start");
-  log("helloRequired.hello()");
-  helloRequired.hello();
-  log("goodbyeRequired.goodbye()");
-  goodbyeRequired.goodbye();
+  log("helloRequire.hello()");
+  helloRequire.hello();
+  log("goodbyeRequire.goodbye()");
+  goodbyeRequire.goodbye();
   log("end");
 }
 

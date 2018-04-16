@@ -1,4 +1,18 @@
-console.log("standaloneYesTest.js\t: start");
-var x = require("./standaloneYes.bundled");
-console.log("standaloneYesTest.js\t: end");
+const PREIFX = "standaloneYes";
+function log(s){
+  console.log(PREIFX + "\t: " + s);
+}//log
+
+log("start");
+
+var requireResult = require("./standaloneYes.bundled");
+log("requireResult = " + typeof requireResult);
+log("requireResult has " + JSON.stringify(Object.keys(requireResult)));
+log("standaloneMain = " + typeof standaloneMain);
+log("standaloneMainFunction = " + typeof standaloneMainFunction);
+
+log("helloRequireResult = " + typeof helloRequireResult);
+log("goodbyeRequireResult = " + typeof goodbyeRequireResult);
+
+log("end");
 
