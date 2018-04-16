@@ -1,16 +1,20 @@
-console.log("entryYesTest.js\t: start");
+function log(s){
+  console.log("entryYesTest.js\t: " + s);
+}
+
+log("start");
 console.log("entryYesTest.js\t: require ./entryYes");
 entryYesRequired = require("./entryYes");
-console.log("entryYesTest.js\t: typeof entryYesRequired = " + typeof entryYesRequired);
-console.log("entryYesTest.js\t: entryYesRequired has " + Object.keys(entryYesRequired));
-console.log("entryYesTest.js\t: typeof hello = " + typeof hello); 
-console.log("entryYesTest.js\t: typeof helloRequired = " + typeof helloRequired); 
-console.log("entryYesTest.js\t: helloRequired has " + Object.keys(helloRequired)); 
-console.log("entryYesTest.js\t: helloRequired.hello()");
+log("typeof entryYesRequired = " + typeof entryYesRequired);
+log("entryYesRequired has " + Object.keys(entryYesRequired));
+log("typeof hello = " + typeof hello); 
+log("typeof helloRequired = " + typeof helloRequired); 
+log("helloRequired has " + Object.keys(helloRequired)); 
+log("helloRequired.hello()");
 helloRequired.hello();
-console.log("entryYesTest.js\t: typeof goodbyeRequired = " + typeof goodbyeRequired); 
-console.log("entryYesTest.js\t: goodbyeRequired has " + Object.keys(goodbyeRequired)); 
-console.log("entryYesTest.js\t: goodbyeRequired.goodbye()");
+log("typeof goodbyeRequired = " + typeof goodbyeRequired); 
+log("goodbyeRequired has " + Object.keys(goodbyeRequired)); 
+log("goodbyeRequired.goodbye()");
 goodbyeRequired.goodbye();
-console.log("entryYesTest.js\t: end");
+log("end");
 
