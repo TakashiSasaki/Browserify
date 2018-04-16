@@ -4,20 +4,14 @@ requireYes.ugly: requireMain.js modules/hello.js modules/goodbye.js
 requireNo.ugly: requireMain.js modules/hello.js modules/goodbye.js
 	browserify -o $@ $<
 
-requireNo: requireNo.js
+requireNo: requireNo.nodejs requireNo.bundled
 	$(NODE) $<
 
-requireYes: requireYes.js
-	$(NODE) $<
-
-requireNoTest: requireNoTest.js requireNo.js
-	$(NODE) $<
-
-requireYesTest: requireYesTest.js requireYes.js
+requireYes: requireYes.nodejs requireYes.bundled
 	$(NODE) $<
 
 requireDiff: requireNo.js requireYes.js
 	-diff -w -B -c $^
 
-require: requireNo requireYes requireNoTest requireYesTest requireDiff
+require: requireNo requireYes requireDiff
 

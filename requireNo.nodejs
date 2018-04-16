@@ -1,0 +1,18 @@
+const PREFIX = "requireNo.js";
+
+function log(s){
+	console.log(PREFIX + "\t: " + s);
+}//log
+
+log("start");
+
+requireReturn = require("./requireNo.bundled");
+log("requireReturn = " + typeof requireReturn);
+log("requireReturn has " + JSON.stringify(Object.keys(requireReturn)));
+log("helloRequireResult = " + typeof helloRequireResult);
+log("helloRequireResult has " + JSON.stringify(Object.keys(helloRequireResult)));
+log("goodbyeRequireResult = " + typeof goodbyeRequireResult);
+log("goodbyeRequireResult has " + JSON.stringify(Object.keys(goodbyeRequireResult)));
+log("requireMainFunction = " + typeof requireMainFunction);
+
+log("end");
