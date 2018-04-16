@@ -13,7 +13,7 @@ pull:
 	clasp pull
 
 clean:
-	@rm -rf *.ugly *.beautiful *.patched *.rej *.bundled
+	@rm -rf *.ugly *.beautiful *.patched *.rej *.bundled .*.swp *.tmp
 
 prepare:
 	sudo n stable ;\
