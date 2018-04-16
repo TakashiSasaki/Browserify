@@ -20,6 +20,8 @@ prepare:
 		sudo npm -g update ;\
 		sudo npm -g install browserify js-beautify js-prettify @google/clasp
 
+# ugly => beautiful => patched => bundled
+
 .ugly.beautiful:
 	js-beautify -f $< -o $@
 
@@ -35,4 +37,3 @@ include require.mk
 include target.mk
 
 
-# ugly => beautiful => patched => bundled
