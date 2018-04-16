@@ -13,7 +13,7 @@ pull:
 	clasp pull
 
 clean:
-	@rm -rf entryYes.js entryNo.js standaloneYes.js standaloneNo.js requireYes.js requireNo.js *.ugly *.beautiful *.patched *.rej 
+	@rm -rf *.ugly *.beautiful *.patched *.rej *.bundled
 
 prepare:
 	sudo n stable ;\

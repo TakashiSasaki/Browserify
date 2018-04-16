@@ -1,4 +1,5 @@
 const PREFIX = "entryMain";
+
 function log(s) {
   console.log(PREFIX + "\t: " + s);
 }
@@ -30,7 +31,9 @@ function entryMainFunction(){
   log("end");
 }
 
-module.exports.entryMainFunction = entryMainFunction;
+if(typeof module !== "undefined") {
+	module.exports.entryMainFunction = entryMainFunction;
+}
 
 log("end");
 
