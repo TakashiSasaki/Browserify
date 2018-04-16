@@ -1,4 +1,4 @@
-# Makefile-standalone
+# standalone.mk
 
 standaloneNo.ugly: standaloneMain.js modules/hello.js modules/goodbye.js
 	browserify -o $@ $^ 
@@ -6,23 +6,20 @@ standaloneNo.ugly: standaloneMain.js modules/hello.js modules/goodbye.js
 standaloneYes.ugly: standaloneMain.js modules/hello.js modules/goodbye.js
 	browserify -s hoge -o $@ $^ 
 
-standaloneNo: standaloneNo.js
+standaloneNo: standaloneNo.nodejs standaloneNo.bundled
 	$(NODE) $<
 
-standaloneYes: standaloneYes.js
+standaloneYes: standaloneYes.nodejs standaloneYes.bundled
 	$(NODE) $<
 
-standaloneNoTest: standaloneNoTest.js standaloneNo.js
-	$(NODE) $<
-
-standaloneYesTest: standaloneYesTest.js standaloneYes.js
-	$(NODE) $<
-
-standaloneDiff: standaloneNo.js standaloneYes.js
+standaloneDiff: standaloneNo.bundled standaloneYes.bundled
 	-diff -w -B -c $^
 
-standaloneYes.patch: standaloneYes.beautiful standaloneYes.js
+standaloneYes.patch: standaloneYes.beautiful standaloneYes.bundled
 	-diff -c $^
 
-standalone: standaloneNo standaloneYes standaloneNoTest standaloneYesTest standaloneDiff
+standaloneNo.patch: standaloneNo.beautiful standaloneYes.bundled
+	-diff -c $^
+
+standalone: standaloneNo standaloneYes standaloneDiff
 

@@ -1,0 +1,15 @@
+const PREFIX="standaloneNo.nodejs";
+function log(s){
+	console.log(PREFIX + "\t: " + s);
+}//log
+
+log("start");
+
+log("requireReturnResult = rquire('standaloneNo.bundled')");
+var requireReturnResult = require("standaloneNo.bundled");
+
+log("requireReturnResult = " + typeof requireReturnResult);
+log("requireReturnResult has " + JSON.stringify(Object.keys(requireReturnResult)));
+
+log("end");
+
