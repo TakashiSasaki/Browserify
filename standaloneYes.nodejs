@@ -1,18 +1,22 @@
 const PREIFX = "standaloneYes";
+
 function log(s){
-  console.log(PREIFX + "\t: " + s);
+  console.log(PREIFX + ".nodejs\t: " + s);
 }//log
 
 log("start");
 
-var requireResult = require("./standaloneYes.bundled");
-log("requireResult = " + typeof requireResult);
-log("requireResult has " + JSON.stringify(Object.keys(requireResult)));
-log("standaloneMain = " + typeof standaloneMain);
-log("standaloneMainFunction = " + typeof standaloneMainFunction);
+const bundlePath = "./" + PREIFX + ".bundled";
+bundle = require(bundlePath);
 
+log("bundle = " + typeof bundle );
+log("bundle has " + JSON.stringify(Object.keys(bundle)));
+log("bundle.mainFunction = " + typeof bundle.mainFunction);
+log("mainFunction = " + typeof mainFunction);
 log("helloRequireResult = " + typeof helloRequireResult);
+log("helloRequireResult has " + JSON.stringify(Object.keys(helloRequireResult)));
 log("goodbyeRequireResult = " + typeof goodbyeRequireResult);
+log("goodbyeRequireResult has " + JSON.stringify(Object.keys(goodbyeRequireResult)));
 
 log("end");
 

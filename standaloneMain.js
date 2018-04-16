@@ -1,7 +1,7 @@
-const PREFIX = "standaloneMain.js";
+const PREFIX = "standaloneMain";
 
 function log(s) {
-	console.log(PREFIX + "\t: " + s);
+	console.log(PREFIX + ".js\t: " + s);
 }//log
 
 log("start");
@@ -16,14 +16,15 @@ goodbyeRequireResult = require("./modules/goodbye.js");
 log("goodbyeRequireResult has " + JSON.stringify(Object.keys(goodbyeRequireResult)));
 log("goodbye = " + typeof goodbye);
 
-function standaloneMainFunction(){
+function mainFunction(){
 	log("standaloneMainFunction");
-}//standaloneMainFunction
+}//mainFunction
+
+log("module = " + typeof module);
+log("module.exports = " + typeof module.exports);
 
 if(typeof module !== "undefined"){
-	log("module = " + typeof module);
-	log("module.exports = " + typeof module.exports);
-	module.exports.standaloneMainFunction = standaloneMainFunction;
+	module.exports.mainFunction = mainFunction;
 }//if
 
 log("end");

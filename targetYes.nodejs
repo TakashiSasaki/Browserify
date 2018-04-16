@@ -1,4 +1,4 @@
-const PREFIX = "requireNo";
+const PREFIX = "targetYes";
 
 function log(s){
 	console.log(PREFIX + ".nodejs\t: " + s);
@@ -6,13 +6,16 @@ function log(s){
 
 log("start");
 
-requireResult = require("./" + PREFIX + ".bundled");
+const bundledPath = "./" + PREFIX + ".bundled";
+
+requireResult = require(bundledPath);
+
 log("requireResult = " + typeof requireResult);
 log("requireResult has " + JSON.stringify(Object.keys(requireResult)));
 log("helloRequireResult = " + typeof helloRequireResult);
 log("helloRequireResult has " + JSON.stringify(Object.keys(helloRequireResult)));
 log("goodbyeRequireResult = " + typeof goodbyeRequireResult);
 log("goodbyeRequireResult has " + JSON.stringify(Object.keys(goodbyeRequireResult)));
-log("requireMainFunction = " + typeof requireMainFunction);
+log("mainFunction = " + typeof mainFunction);
 
 log("end");

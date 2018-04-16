@@ -1,14 +1,11 @@
-targetYes.ugly: requireMain.js modules/hello.js modules/goodbye.js
+targetYes.ugly: targetMain.js modules/hello.js modules/goodbye.js
 	browserify -o $@ $< -r ./modules/hello.js:helloTarget -r ./modules/goodbye.js:goodbyeTarget
 
-targetYes: targetYes.js
+targetYes: targetYes.nodejs targetYes.bundled
 	$(NODE) $<
 
-targetYesTest: targetYesTest.js targetYes.js
-	$(NODE) $<
-
-targetDiff: requireYes.js targetYes.js 
+targetDiff: requireYes.bundled targetYes.bundled
 	-diff -w -B -c $^
 
-target: targetYes targetYesTest targetDiff
+target: requireYes targetYes targetYes targetDiff
 

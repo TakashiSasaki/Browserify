@@ -1,6 +1,6 @@
-const PREFIX = "requireNo";
+const PREFIX = "requireYes";
 
-function log(s){
+function log(s) {
 	console.log(PREFIX + ".nodejs\t: " + s);
 }//log
 
@@ -16,3 +16,4 @@ log("goodbyeRequireResult has " + JSON.stringify(Object.keys(goodbyeRequireResul
 log("requireMainFunction = " + typeof requireMainFunction);
 
 log("end");
+

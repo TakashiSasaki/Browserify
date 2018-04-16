@@ -10,7 +10,7 @@ requireNo: requireNo.nodejs requireNo.bundled
 requireYes: requireYes.nodejs requireYes.bundled
 	$(NODE) $<
 
-requireDiff: requireNo.js requireYes.js
+requireDiff: requireNo.bundled requireYes.bundled
 	-diff -w -B -c $^
 
 require: requireNo requireYes requireDiff

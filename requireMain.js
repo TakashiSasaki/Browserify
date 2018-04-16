@@ -1,7 +1,7 @@
-const PREFIX = "requireMain.js"
+const PREFIX = "requireMain";
 
 function log(s) {
-	console.log(s + "\t: " + s);
+	console.log(PREFIX + ".js\t: " + s);
 }//log
 
 function requireMainFunction() {
