@@ -5,10 +5,13 @@ Logger.log("goodbye.js\t: start");
 //Logger.log("goodbye.js\t: Object.keys(module) = " + Object.keys(module));
 //Logger.log("goodbye.js\t: typeof exports = " + typeof exports);
 //Logger.log("goodbye.js\t: Object.keys(exports) = " + Object.keys(exports));
+
 function goodbye() {
-  Logger.log("goodbye.js#goobye\t:");
+  Logger.log("goodbye.js#goodbye\t:");
 }
-if(typeof exports === "undefined") exports = {};
-exports.goodbye = goodbye;
-//goodbye();
+
+if(typeof module !== "undefined") {
+  module.exports.goodbye = goodbye;
+}
+
 Logger.log("goodbye.js\t: ends");

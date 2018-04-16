@@ -8,8 +8,10 @@ Logger.log("hello.js\t: start");
 function hello() {
   Logger.log("hello.js#hello\t: ");
 }
-if(typeof exports === "undefined") exports = {};
-exports.hello = hello;
-//hello();
+
+if(typeof module !== "undefined") {
+  module.exports.hello = hello;
+}
+
 Logger.log("hello.js\t: end");
 

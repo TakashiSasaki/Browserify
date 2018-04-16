@@ -1,24 +1,36 @@
-console.log("entryMain.js\t: start");
-
-console.log("entryMain.js\t: requiring ./modules/hello.js");
-helloRequired = require("./modules/hello.js");
-console.log("entryMain.js\t: typeof hello = " + typeof hello);
-console.log("entryMain.js\t: typeof helloRequired = " + typeof helloRequired);
-console.log("entryMain.js\t: keys of helloRequired = " + Object.keys(helloRequired));
-
-console.log("entryMain.js\t: requiring ./modules/goodbye.js");
-goodbyeRequired = require("./modules/goodbye.js");
-console.log("entryMain.js\t: typeof goodbye = " + typeof goodbye);
-console.log("entryMain.js\t: typeof goodbyeRequired = " + typeof goodbyeRequired);
-console.log("entryMain.js\t: keys of goodbyeRequired = " + Object.keys(goodbyeRequired));
-
-function entryMainFunction(){
-  console.log("entryMainFunction:");
-  console.log("entryMain.js#entryMainFunction\t: helloRequired.hello()");
-  helloRequired.hello();
-  console.log("entryMain.js#entryMainFunction\t: goodbyeRequired.goodbye()");
-  goodbyeRequiredgoodbye();
+const PREFIX = "entryMain";
+function log(s) {
+  console.log(PREFIX + "\t: " + s);
 }
 
-console.log("entryMain.js\t: end");
+log("start");
+
+log("requiring ./modules/hello.js");
+helloRequiredResult = require("./modules/hello.js");
+log("typeof hello = " + typeof hello);
+log("typeof helloRequiredResult = " + typeof helloRequiredResult);
+log("keys of helloRequiredResult = " + Object.keys(helloRequiredResult));
+
+log("requiring ./modules/goodbye.js");
+goodbyeRequiredResult = require("./modules/goodbye.js");
+log("typeof goodbye = " + typeof goodbye);
+log("typeof goodbyeRequiredResult = " + typeof goodbyeRequiredResult);
+log("keys of goodbyeRequiredResult = " + Object.keys(goodbyeRequiredResult));
+
+function entryMainFunction(){
+  const PREFIX = "entryMainFunction";
+  function log(s) {
+    console.log(PREFIX + "\t: " + s);
+  }
+  log("start");
+  log("helloRequired.hello()");
+  helloRequired.hello();
+  log("goodbyeRequired.goodbye()");
+  goodbyeRequired.goodbye();
+  log("end");
+}
+
+module.exports.entryMainFunction = entryMainFunction;
+
+log("end");
 
