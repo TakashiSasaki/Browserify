@@ -15,11 +15,11 @@ standaloneYes: standaloneYes.nodejs standaloneYes.bundled
 standaloneDiff: standaloneNo.bundled standaloneYes.bundled
 	-diff -w -B -c $^
 
-standaloneYes.patch: standaloneYes.beautiful standaloneYes.bundled
-	-diff -c $^
+standaloneYes.patch:
+	-diff -w -B -c standaloneYes.beautiful standaloneYes.bundled | tee >$@
 
-standaloneNo.patch: standaloneNo.beautiful standaloneYes.bundled
-	-diff -c $^
+standaloneNo.patch:
+	-diff -w -B -c standaloneNo.beautiful standaloneNo.bundled | tee >$@
 
 standalone: standaloneNo standaloneYes standaloneDiff
 

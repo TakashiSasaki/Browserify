@@ -1,3 +1,4 @@
 console.log("standaloneYesTest.js\t: start");
-var x = require("./standaloneYes.js");
+var x = require("./standaloneYes.bundled");
 console.log("standaloneYesTest.js\t: end");
+

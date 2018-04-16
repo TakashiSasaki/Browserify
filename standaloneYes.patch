@@ -1,1 +1,44 @@
-make: 'standaloneYes.patch' is up to date.
+*** standaloneYes.beautiful	2018-04-16 12:45:57.856054100 +0900
+--- standaloneYes.bundled	2018-04-16 12:48:40.348087800 +0900
+***************
+*** 1,18 ****
+--- 1,24 ----
+  (function(f) {
+      if (typeof exports === "object" && typeof module !== "undefined") {
+          module.exports = f()
++ 				console.log("module.exports = f()");
+      } else if (typeof define === "function" && define.amd) {
+          define([], f)
++ 				console.log("define([], f)");
+      } else {
+          var g;
+          if (typeof window !== "undefined") {
+              g = window
++ 						console.log("g = window");
+          } else if (typeof global !== "undefined") {
+              g = global
++ 						console.log("g = global");
+          } else if (typeof self !== "undefined") {
+              g = self
++ 						console.log("g = self");
+          } else {
+              g = this
++ 						console.log("g = this");
+          }
+          g.hoge = f()
+      }
+***************
+*** 20,26 ****
+--- 26,37 ----
+      var define, module, exports;
+      return (function() {
+          function r(e, n, t) {
++             console.log("r\t: e = " + JSON.stringify(e));
++             console.log("r\t: n = " + JSON.stringify(n));
++             console.log("r\t: t = " + JSON.stringify(t));
+              function o(i, f) {
++                 console.log("o\t: i = " + JSON.stringify(i));
++                 console.log("o\t: f = " + JSON.stringify(f));
+                  if (!n[i]) {
+                      if (!e[i]) {
+                          var c = "function" == typeof require && require;
