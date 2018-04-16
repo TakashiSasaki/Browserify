@@ -1,22 +1,29 @@
-const PREFIX = "entryNoTest.nodejs";
+const PREFIX = "entryNo.nodejs";
+
 function log(s){
   console.log(PREFIX + "\t: " + s);
-}
+}//log
 
 log("start");
-log("require ./entryNo.bundled");
-requireResult = require("./entryNo.bundled");
-log("requireResult has " + JSON.stringify(Object.keys(requireResult)));
-log("entryMainFunction = " + typeof entryMainFunction);
+
+const bundlePath = "./entryNo.bundled";
+log("require " + bundlePath);
+bundle = require(bundlePath);
+
+log("bundle has " + JSON.stringify(Object.keys(bundle)));
+
+log("mainFunction = " + typeof mainFunction);
+log("hogehoge = " + typeof hogehoge);
 
 log("hello = " + typeof hello); 
 log("helloRequireResult has " + JSON.stringify(Object.keys(helloRequireResult))); 
-log("helloRequire.hello()");
-helloRequireResult.hello();
+log("helloRequireResult.helloFunction()");
+helloRequireResult.helloFunction();
 
-log("hello = " + typeof goodbye); 
-log("goodbyeRequireResult has " + Object.keys(goodbyeRequireResult)); 
-log("goodbyeRequireResult.goodbye()");
-goodbyeRequireResult.goodbye();
+log("goodbye = " + typeof goodbye); 
+log("goodbyeFunction = " + typeof goodbyeFunction);
+log("goodbyeRequireResult has " + JSON.stringify(Object.keys(goodbyeRequireResult))); 
+log("goodbyeRequireResult.goodbyeFunction()");
+goodbyeRequireResult.goodbyeFunction();
 log("end");
 

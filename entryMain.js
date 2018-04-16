@@ -27,14 +27,14 @@ function mainFunction(){
   log("goodbyeRequire.goodbye()");
   goodbyeRequire.goodbye();
   log("end");
-}
+}//mainFunction
 
 log("module = " + typeof module);
 log("module.exports = " + typeof module.exports);
 
 if(typeof module !== "undefined") {
 	module.exports.mainFunction = mainFunction;
-}
+}//if
 
 log("end");
 

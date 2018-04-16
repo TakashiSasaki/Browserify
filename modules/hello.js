@@ -1,18 +1,24 @@
-if(typeof Logger === "undefined") Logger = console;
-Logger.log("hello.js\t: start");
-//Logger.log("hello.js\t: typeof require = " + typeof require);
-//Logger.log("hello.js\t: typeof module = " + typeof module);
-//Logger.log("hello.js\t: Object.keys(module) = " + Object.keys(module));
-//Logger.log("hello.js\t: typeof exports = " + typeof exports);
-//Logger.log("hello.js\t: Object.keys(exports) = " + Object.keys(exports));
-//
-function hello() {
-  Logger.log("hello.js#hello\t: ");
-}//hello
+const PREFIX = "modules/hello.js\t: ";
+
+function log(s) {
+	if(typeof console === undefined) {
+		Logger.log(PREFIX + s);
+	} else {
+		console.log(PREFIX + s);
+	}//if
+}//log
+
+log("start");
+
+function helloFunction() {
+	log("helloFunction");
+}//helloFunction
+
+log("module = " + typeof module);
+log("module.exports = " + typeof module.exports);
 
 if(typeof module !== "undefined") {
-  module.exports.hello = hello;
+  module.exports.helloFunction = helloFunction;
 }
 
-Logger.log("hello.js\t: end");
-
+log("end");

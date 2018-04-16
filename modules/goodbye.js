@@ -1,17 +1,24 @@
-if(typeof Logger === "undefined") Logger = console;
-Logger.log("goodbye.js\t: start");
-//Logger.log("goodbye.js\t: typeof require = " + typeof require);
-//Logger.log("goodbye.js\t: typeof module = " + typeof module);
-//Logger.log("goodbye.js\t: Object.keys(module) = " + Object.keys(module));
-//Logger.log("goodbye.js\t: typeof exports = " + typeof exports);
-//Logger.log("goodbye.js\t: Object.keys(exports) = " + Object.keys(exports));
+const PREFIX = "module/goodbye.js\t ";
 
-function goodbye() {
-  Logger.log("goodbye.js#goodbye\t:");
-}
+function log(s) {
+	if(typeof console === "undefined") {
+		Logger.log(PREFIX + s);
+	} else {
+		console.log(PREFIX + s);
+	}//if
+}//log
+
+log("start");
+
+function goodbyeFunction() {
+  log("goodbyeFunction");
+}//goodbyeFunction
+
+log("module = " + typeof module);
+log("module.exports = " + typeof module.exports);
 
 if(typeof module !== "undefined") {
-  module.exports.goodbye = goodbye;
-}
+  module.exports.goodbyeFunction = goodbyeFunction;
+}//if
 
-Logger.log("goodbye.js\t: ends");
+log("end");
