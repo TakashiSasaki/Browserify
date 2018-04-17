@@ -39,6 +39,6 @@ include standalone.mk
 include require.mk
 include target.mk
 
-screenshot.png: index.html index.css 
-	chromium-browser --headless --screenshot --allow-file-access-from-files index.html
+chrome:
+	make -C chrome
 
