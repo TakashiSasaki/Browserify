@@ -1,5 +1,5 @@
 .PHONY: prepare push pull clean all 
-.SUFFIXES: .patched .ugly .js .beautiful .bundled .nodejs
+.SUFFIXES: .patched .ugly .js .beautiful .bundled .nodejs .log .diff
 .INTERMEDIATE: entryYes.tmp entryNo.tmp
 
 NODE=NODE_PATH=$(NODE_PATH):. node
@@ -13,7 +13,7 @@ pull:
 	clasp pull
 
 clean:
-	@rm -rf *.ugly *.beautiful *.patched *.rej *.bundled .*.swp *.tmp
+	@rm -rf *.ugly *.beautiful *.patched *.rej *.bundled .*.swp *.tmp *.log
 
 prepare:
 	sudo n stable ;\
@@ -30,6 +30,9 @@ prepare:
 
 .patched.bundled:
 	js-beautify -f $< -o $@
+
+.bundled.log: 
+	$(NODE) test.nodejs $< | tee $@
 
 include entry.mk
 include standalone.mk

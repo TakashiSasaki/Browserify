@@ -1,17 +1,13 @@
-entryYes.ugly: entryMain.js modules/hello.js modules/goodbye.js
-	browserify -o $@ -e entryMain $^
+# entry.mk
 
-entryNo.ugly: entryMain.js modules/hello.js modules/goodbye.js
-	browserify -o $@ $^
+entryYes.ugly: main.js modules/hello.js modules/goodbye.js
+	browserify --im -o $@ -e entryMain $^
 
-entryNo: entryNo.nodejs entryNo.bundled
-	$(NODE) $<
+entryNo.ugly: main.js modules/hello.js modules/goodbye.js
+	browserify --im -o $@ $^
 
-entryYes: entryYes.nodejs entryYes.bundled
-	$(NODE) $<
+entry.diff: entryYes.bundled entryNo.bundled
+	-diff -w -B -c $^ | tee $@
 
-entryDiff: entryYes.bundled entryNo.bundled
-	-diff -w -B -c $^
-
-entry: entryYes entryNo entryYes entryNo
+entry: entryNo.log entryYes.log entry.diff
 

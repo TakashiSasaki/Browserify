@@ -1,7 +1,7 @@
 const PREFIX = "modules/hello.js\t: ";
 
 function log(s) {
-	if(typeof console === undefined) {
+	if(typeof console === "undefined") {
 		Logger.log(PREFIX + s);
 	} else {
 		console.log(PREFIX + s);

@@ -6,6 +6,7 @@
 /*.patched
 /*.rej
 /*.bundled
+/*.log
 entryNo.js
 entryYes.js
 requireNo.js

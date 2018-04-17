@@ -1,12 +1,12 @@
-const PREFIX = "entryNo.nodejs";
+const PREFIX = "entryNo";
 
 function log(s){
-  console.log(PREFIX + "\t: " + s);
+  console.log(PREFIX + ".nodejs\t: " + s);
 }//log
 
 log("start");
 
-const bundlePath = "./entryNo.bundled";
+const bundlePath = "./" + PREFIX + ".bundled";
 log("require " + bundlePath);
 bundle = require(bundlePath);
 
@@ -24,6 +24,8 @@ log("goodbye = " + typeof goodbye);
 log("goodbyeFunction = " + typeof goodbyeFunction);
 log("goodbyeRequireResult has " + JSON.stringify(Object.keys(goodbyeRequireResult))); 
 log("goodbyeRequireResult.goodbyeFunction()");
+
 goodbyeRequireResult.goodbyeFunction();
+
 log("end");
 
