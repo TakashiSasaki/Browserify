@@ -1,0 +1,31 @@
+const PREFIX = "entryNo";
+
+function log(s){
+  console.log(PREFIX + ".nodejs\t: " + s);
+}//log
+
+log("start");
+
+const bundlePath = "./" + PREFIX + ".bundled";
+log("require " + bundlePath);
+bundle = require(bundlePath);
+
+log("bundle has " + JSON.stringify(Object.keys(bundle)));
+
+log("mainFunction = " + typeof mainFunction);
+log("hogehoge = " + typeof hogehoge);
+
+log("hello = " + typeof hello); 
+log("helloRequireResult has " + JSON.stringify(Object.keys(helloRequireResult))); 
+log("helloRequireResult.helloFunction()");
+helloRequireResult.helloFunction();
+
+log("goodbye = " + typeof goodbye); 
+log("goodbyeFunction = " + typeof goodbyeFunction);
+log("goodbyeRequireResult has " + JSON.stringify(Object.keys(goodbyeRequireResult))); 
+log("goodbyeRequireResult.goodbyeFunction()");
+
+goodbyeRequireResult.goodbyeFunction();
+
+log("end");
+

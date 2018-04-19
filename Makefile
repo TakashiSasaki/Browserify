@@ -1,7 +1,10 @@
-.PHONY: test prepare browserified push pull clean all test-entry diff-entry
+.PHONY: prepare push pull clean all 
+.SUFFIXES: .patched .ugly .js .beautiful .bundled .nodejs .log .diff .chrome
+.INTERMEDIATE: entryYes.tmp entryNo.tmp
+
 NODE=NODE_PATH=$(NODE_PATH):. node
 
-all: test-standalone test-require test-entry
+all: entry standalone require target
 
 push: $(BROWSERIFIED)
 	clasp push
@@ -10,71 +13,32 @@ pull:
 	clasp pull
 
 clean:
-	@rm -rf entryYes.js entryNo.js standaloneYes.js standaloneNo.js requireYes.js requireNo.js tmp.js *.tmp
+	@rm -rf *.ugly *.beautiful *.patched *.rej *.bundled .*.swp *.tmp *.log *.chrome
 
 prepare:
 	sudo n stable ;\
 		sudo npm -g update ;\
 		sudo npm -g install browserify js-beautify js-prettify @google/clasp
 
-%.js: %.tmp
-	@js-beautify -f $< -o $@
+# ugly => beautiful => patched => bundled
 
-entryYes.tmp: hello.js goodbye.js entryMain.js
-	browserify -e entryMain -o $@ $^
+.ugly.beautiful:
+	js-beautify -f $< -o $@
 
-entryNo.tmp : hello.js goodbye.js entryMain.js
-	browserify -o $@ $^ 
+.beautiful.patched:
+	patch -o $@ $< $*.patch
 
-entryYesTest: entryYesTest.js entryYes.js
-	$(NODE) $<
+.patched.bundled:
+	js-beautify -f $< -o $@
 
-entryNoTest: entryNoTest.js entryNo.js
-	$(NODE) $<
+.bundled.log: 
+	$(NODE) test.nodejs $< | tee $@
 
-test-entry: entryYesTest entryNoTest
+.bundled.chrome:
+	runinchrome $< | tee $@
 
-diff-entry: entryYes.js entryNo.js
-	diff -w $^
-
-requireYes.tmp: requireMain.js hello.js goodbye.js
-	browserify -r ./hello.js -r ./goodbye.js -o $@ $<
-
-requireNo.tmp: requireMain.js hello.js goodbye.js
-	browserify -o $@ $<
-
-targetYes.tmp: targetMain.js hello.js goodbye.js
-	browserify -o -r ./hello.js:helloTarget -r ./goodbye.js:goodbyeTarget  $@ $<
-
-requireYesTest: requireYesTest.js requireYes.js
-	$(NODE) $<
-
-
-requireNoTest: requireNoTest.js requireNo.js
-	$(NODE) $<
-
-targetYesTest: targetYesTest.js targetYes.js
-	$(NODE) $<
-
-test-require: requireYesTest requireNoTest
-
-diff-require: requireYes.js requireNo.js
-	diff -w $^
-
-standaloneNo.tmp: hello.js goodbye.js standaloneMain.js
-	browserify -o $@ $^ 
-
-standaloneYes.tmp: hello.js goodbye.js standaloneMain.js
-	browserify -s standaloneYes -o $@ $^ 
-
-standaloneNoTest: standaloneNoTest.js standaloneNo.js
-	$(NODE) $<
-
-standaloneYesTest: standaloneYesTest.js standaloneYes.js
-	$(NODE) $<
-
-test-standalone: standaloneYesTest standaloneNoTest
-
-diff-standalone: standaloneYes.js standaloneNo.js
-	diff -w $^
+include entry.mk
+include standalone.mk
+include require.mk
+include target.mk
 
