@@ -7,6 +7,7 @@ vpath %.ugly 			./tmp
 vpath %.beautiful ./tmp
 vpath %.patched 	./tmp
 vpath %.bundled 	./bundled
+vpath %.patch			./patch
 
 NODE=NODE_PATH=$(NODE_PATH):./bundled node
 
@@ -35,7 +36,7 @@ prepare:
 	js-beautify -f tmp/$< -o tmp/$@
 
 .beautiful.patched: mkdir
-	patch -o tmp/$@ tmp/$< $*.patch
+	patch -o tmp/$@ tmp/$< patch/$*.patch
 
 .patched.bundled: mkdir
 	js-beautify -f tmp/$< -o bundled/$@
