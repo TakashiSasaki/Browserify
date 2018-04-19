@@ -7,5 +7,5 @@ requireNo.ugly: main.js modules/hello.js modules/goodbye.js
 require.diff: requireNo.bundled requireYes.bundled
 	-diff -w -B -c $^
 
-require: requireNo.log requireYes.log require.diff
+require: requireNo.log requireYes.log require.diff requireNo.chrome requireYes.chrome
 

@@ -9,5 +9,5 @@ standaloneYes.ugly: main.js modules/hello.js modules/goodbye.js
 standalone.diff : standaloneNo.bundled standaloneYes.bundled
 	-diff -w -B -c $^
 
-standalone: standaloneNo.log standaloneYes.log standalone.diff
+standalone: standaloneNo.log standaloneYes.log standalone.diff standaloneNo.chrome standaloneYes.chrome
 

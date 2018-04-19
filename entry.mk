@@ -9,5 +9,5 @@ entryNo.ugly: main.js modules/hello.js modules/goodbye.js
 entry.diff: entryYes.bundled entryNo.bundled
 	-diff -w -B -c $^ | tee $@
 
-entry: entryNo.log entryYes.log entry.diff
+entry: entryNo.log entryYes.log entry.diff entryNo.chrome entryYes.chrome
 

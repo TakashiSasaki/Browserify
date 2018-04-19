@@ -9,5 +9,5 @@ targetNo.ugly: main.js modules/hello.js modules/goodbye.js
 target.diff: requireYes.bundled targetYes.bundled
 	-diff -w -B -c $^
 
-target: targetNo.log targetYes.log target.diff
+target: targetNo.log targetYes.log target.diff targetNo.chrome targetYes.chrome
 

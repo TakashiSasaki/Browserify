@@ -1,5 +1,5 @@
 .PHONY: prepare push pull clean all 
-.SUFFIXES: .patched .ugly .js .beautiful .bundled .nodejs .log .diff
+.SUFFIXES: .patched .ugly .js .beautiful .bundled .nodejs .log .diff .chrome
 .INTERMEDIATE: entryYes.tmp entryNo.tmp
 
 NODE=NODE_PATH=$(NODE_PATH):. node
@@ -13,7 +13,7 @@ pull:
 	clasp pull
 
 clean:
-	@rm -rf *.ugly *.beautiful *.patched *.rej *.bundled .*.swp *.tmp *.log
+	@rm -rf *.ugly *.beautiful *.patched *.rej *.bundled .*.swp *.tmp *.log *.chrome
 
 prepare:
 	sudo n stable ;\
@@ -34,11 +34,11 @@ prepare:
 .bundled.log: 
 	$(NODE) test.nodejs $< | tee $@
 
+.bundled.chrome:
+	runinchrome $< | tee $@
+
 include entry.mk
 include standalone.mk
 include require.mk
 include target.mk
-
-chrome:
-	make -C chrome
 
