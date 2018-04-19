@@ -7,7 +7,7 @@
 /*.rej
 /*.bundled
 /*.log
-chrome/*lighthouse.*
+*lighthouse.*
 entryNo.js
 entryYes.js
 requireNo.js
