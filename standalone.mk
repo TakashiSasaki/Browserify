@@ -1,13 +1,13 @@
 # standalone.mk
 
-standaloneNo.ugly: main.js modules/hello.js modules/goodbye.js
-	browserify --im -o $@ $^ 
+standaloneNo.ugly: main.js modules/hello.js modules/goodbye.js mkdir
+	browserify --im -o tmp/$@ $^ 
 
-standaloneYes.ugly: main.js modules/hello.js modules/goodbye.js
-	browserify --im -s hoge -o $@ $^ 
+standaloneYes.ugly: main.js modules/hello.js modules/goodbye.js mkdir
+	browserify --im -s hoge -o tmp/$@ $^ 
 
 standalone.diff : standaloneNo.bundled standaloneYes.bundled
-	-diff -w -B -c $^
+	-cd bundled; diff -w -B -c $^ >$@
 
 standalone: standaloneNo.log standaloneYes.log standalone.diff standaloneNo.chrome standaloneYes.chrome
 
