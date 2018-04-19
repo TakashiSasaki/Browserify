@@ -28,7 +28,7 @@ clean:
 prepare:
 	sudo n stable ;\
 		sudo npm -g update ;\
-		sudo npm -g install browserify js-beautify js-prettify @google/clasp
+		sudo npm -g install browserify js-beautify js-prettify @google/clasp myassert runinchrome
 
 # ugly => beautiful => patched => bundled
 
