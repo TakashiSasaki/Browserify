@@ -1,29 +1,26 @@
-.PHONY: prepare push pull clean all mkdir
-.SUFFIXES: .patched .ugly .js .beautiful .bundled .nodejs .nodelog .diff .chromelog
-.INTERMEDIATE: %.ugly
+.PHONY: prepare push pull clean all bundled
+.SUFFIXES:
+.SUFFIXES: .patched .ugly .js .beautiful .bundled  
 
-vpath %.log 			./log
-vpath %.ugly 			./tmp
-vpath %.beautiful ./tmp
-vpath %.patched 	./tmp
-vpath %.bundled 	./bundled
-vpath %.patch			./patch
+vpath %.ugly tmp
+vpath %.bundled bundled
+vpath %.patch src
+vpath %.js src
 
 NODE=NODE_PATH=$(NODE_PATH):./bundled node
 
-all: entry standalone require target
+bundled: entryNo.bundled entryYes.bundled \
+	standaloneNo.bundled standaloneYes.bundled \
+ 	requireNo.bundled requireYes.bundled \
+ 	targetNo.bundled targetYes.bundled
 
-mkdir:
-	@-mkdir tmp bundled log
-
-push: $(BROWSERIFIED)
-	clasp push
-
-pull:
-	clasp pull
+diff: 
+	make -C bundled
 
 clean:
-	@rm -rf *.ugly *.beautiful *.patched *.rej *.bundled .*.swp *.tmp *.log *.chrome *lighthouse* bundled/ log/ tmp/ chrome/
+	@rm -rf .*.swp *.bundled *.ugly \;
+	make -C tmp clean ;\
+	make -C bundled clean 
 
 prepare:
 	sudo n stable ;\
@@ -32,62 +29,36 @@ prepare:
 
 # ugly => beautiful => patched => bundled
 
-.ugly.beautiful: mkdir
-	js-beautify -f tmp/$< -o tmp/$@
+%.beautiful : %.ugly
+	js-beautify -f $< -o $@
 
-.beautiful.patched: mkdir
-	patch -o tmp/$@ tmp/$< patch/$*.patch
+%.patched : %.beautiful
+	patch -o $@ $< src/$*.patch
 
-.patched.bundled: mkdir
-	js-beautify -f tmp/$< -o bundled/$@
+%.bundled : %.patched
+	js-beautify -f $< -o bundled/$@
 
-.bundled.nodelog: mkdir
-	$(NODE) node.js $< >log/$@
+tmp/entryYes.ugly: main.js hello.js goodbye.js 
+	browserify --im -o $@ -e entryMain $^
 
-.bundled.chromelog: mkdir
-	cd bundled ; runinchrome $< ../chrome.js >../log/$@
+tmp/entryNo.ugly: main.js hello.js goodbye.js 
+	browserify --im -o $@ $^
 
-entryYes.ugly: main.js modules/hello.js modules/goodbye.js mkdir
-	browserify --im -o tmp/$@ -e entryMain $^
+tmp/standaloneNo.ugly: main.js hello.js goodbye.js 
+	browserify --im -o $@ $^ 
 
-entryNo.ugly: main.js modules/hello.js modules/goodbye.js mkdir
-	browserify --im -o tmp/$@ $^
+tmp/standaloneYes.ugly: main.js hello.js goodbye.js 
+	browserify --im -s hoge -o $@ $^
 
-entry.diff: entryYes.bundled entryNo.bundled
-	-cd bundled; diff -w -B -c $^ >$@
+tmp/requireYes.ugly: main.js hello.js goodbye.js 
+	browserify --im -o $@ $< -r ./src/hello.js -r ./src/goodbye.js
 
-entry: entryNo.nodelog entryYes.nodelog entry.diff entryNo.chromelog entryYes.chromelog
+tmp/requireNo.ugly: main.js hello.js goodbye.js 
+	browserify --im -o $@ $<
 
-standaloneNo.ugly: main.js modules/hello.js modules/goodbye.js mkdir
-	browserify --im -o tmp/$@ $^ 
+tmp/targetYes.ugly: main.js hello.js goodbye.js 
+	browserify --im -o $@ $< -r ./src/hello.js:helloTarget -r ./src/goodbye.js:goodbyeTarget
 
-standaloneYes.ugly: main.js modules/hello.js modules/goodbye.js mkdir
-	browserify --im -s hoge -o tmp/$@ $^ 
-
-standalone.diff : standaloneNo.bundled standaloneYes.bundled
-	-cd bundled; diff -w -B -c $^ >$@
-
-standalone: standaloneNo.nodelog standaloneYes.nodelog standalone.diff standaloneNo.chromelog standaloneYes.chromelog
-
-requireYes.ugly: main.js modules/hello.js modules/goodbye.js mkdir
-	browserify --im -o tmp/$@ $< -r ./modules/hello.js -r ./modules/goodbye.js
-
-requireNo.ugly: main.js modules/hello.js modules/goodbye.js mkdir
-	browserify --im -o tmp/$@ $<
-
-require.diff: requireNo.bundled requireYes.bundled 
-	-cd bundled; diff -w -B -c $^ >$@
-
-require: requireNo.nodelog requireYes.nodelog require.diff requireNo.chromelog requireYes.chromelog
-
-targetYes.ugly: main.js modules/hello.js modules/goodbye.js mkdir
-	browserify --im -o tmp/$@ $< -r ./modules/hello.js:helloTarget -r ./modules/goodbye.js:goodbyeTarget
-
-targetNo.ugly: main.js modules/hello.js modules/goodbye.js mkdir
-	browserify --im -o tmp/$@ $< -r ./modules/hello.js -r ./modules/goodbye.js
-
-target.diff: requireYes.bundled targetYes.bundled 
-	-cd bundled; diff -w -B -c $^ >$@
-
-target: targetNo.nodelog targetYes.nodelog target.diff targetNo.chromelog targetYes.chromelog
+tmp/targetNo.ugly: main.js hello.js goodbye.js 
+	browserify --im -o $@ $< -r ./src/hello.js -r ./src/goodbye.js
 

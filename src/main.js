@@ -15,7 +15,7 @@ helloNoVar = undefined;
 try {
   helloNoVar = require("helloTarget");
 } catch (e){
-	helloNoVar = require("./modules/hello.js");
+	helloNoVar = require("./hello.js");
 }
 log("helloNoVar", helloNoVar);
 
@@ -24,7 +24,7 @@ var goodbyeTargetVar = undefined;
 try {
 	goodbyeVar = require("goodbyeTarget");
 } catch (e){
-	goodbyeVar = require("./modules/hello.js");
+	goodbyeVar = require("./hello.js");
 }
 log("goodbyeVar", goodbyeVar);
 
