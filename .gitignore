@@ -6,6 +6,7 @@
 *.rej
 *.bundled
 *.log
+*.diff
 *lighthouse.*
 entryNo.js
 entryYes.js

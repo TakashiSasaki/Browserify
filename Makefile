@@ -1,5 +1,4 @@
-.PHONY: prepare push pull clean all bundled
-.SUFFIXES:
+.PHONY: prepare clean all bundled
 .SUFFIXES: .patched .ugly .js .beautiful .bundled  
 
 vpath %.ugly tmp
@@ -7,20 +6,22 @@ vpath %.bundled bundled
 vpath %.patch src
 vpath %.js src
 
-NODE=NODE_PATH=$(NODE_PATH):./bundled node
+all: bundled
+	make -C bundled ;\
+		make -C chrome ;\
+		make -C node ;
 
 bundled: entryNo.bundled entryYes.bundled \
 	standaloneNo.bundled standaloneYes.bundled \
  	requireNo.bundled requireYes.bundled \
  	targetNo.bundled targetYes.bundled
 
-diff: 
-	make -C bundled
-
 clean:
 	@rm -rf .*.swp *.bundled *.ugly \;
 	make -C tmp clean ;\
-	make -C bundled clean 
+	make -C bundled clean  ;\
+	make -C chrome clean; \
+	make -C node clean
 
 prepare:
 	sudo n stable ;\
