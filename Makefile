@@ -47,8 +47,47 @@ prepare:
 .bundled.chromelog: mkdir
 	cd bundled ; runinchrome ../chrome.js $< >../log/$@
 
-include entry.mk
-include standalone.mk
-include require.mk
-include target.mk
+entryYes.ugly: main.js modules/hello.js modules/goodbye.js mkdir
+	browserify --im -o tmp/$@ -e entryMain $^
+
+entryNo.ugly: main.js modules/hello.js modules/goodbye.js mkdir
+	browserify --im -o tmp/$@ $^
+
+entry.diff: entryYes.bundled entryNo.bundled
+	-cd bundled; diff -w -B -c $^ >$@
+
+entry: entryNo.nodelog entryYes.nodelog entry.diff entryNo.chromelog entryYes.chromelog
+
+standaloneNo.ugly: main.js modules/hello.js modules/goodbye.js mkdir
+	browserify --im -o tmp/$@ $^ 
+
+standaloneYes.ugly: main.js modules/hello.js modules/goodbye.js mkdir
+	browserify --im -s hoge -o tmp/$@ $^ 
+
+standalone.diff : standaloneNo.bundled standaloneYes.bundled
+	-cd bundled; diff -w -B -c $^ >$@
+
+standalone: standaloneNo.nodelog standaloneYes.nodelog standalone.diff standaloneNo.chromelog standaloneYes.chromelog
+
+requireYes.ugly: main.js modules/hello.js modules/goodbye.js mkdir
+	browserify --im -o tmp/$@ $< -r ./modules/hello.js -r ./modules/goodbye.js
+
+requireNo.ugly: main.js modules/hello.js modules/goodbye.js mkdir
+	browserify --im -o tmp/$@ $<
+
+require.diff: requireNo.bundled requireYes.bundled 
+	-cd bundled; diff -w -B -c $^ >$@
+
+require: requireNo.nodelog requireYes.nodelog require.diff requireNo.chromelog requireYes.chromelog
+
+targetYes.ugly: main.js modules/hello.js modules/goodbye.js mkdir
+	browserify --im -o tmp/$@ $< -r ./modules/hello.js:helloTarget -r ./modules/goodbye.js:goodbyeTarget
+
+targetNo.ugly: main.js modules/hello.js modules/goodbye.js mkdir
+	browserify --im -o tmp/$@ $< -r ./modules/hello.js -r ./modules/goodbye.js
+
+target.diff: requireYes.bundled targetYes.bundled 
+	-cd bundled; diff -w -B -c $^ >$@
+
+target: targetNo.nodelog targetYes.nodelog target.diff targetNo.chromelog targetYes.chromelog
 
