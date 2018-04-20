@@ -1,5 +1,5 @@
 .PHONY: prepare push pull clean all mkdir
-.SUFFIXES: .patched .ugly .js .beautiful .bundled .nodejs .log .diff .chrome
+.SUFFIXES: .patched .ugly .js .beautiful .bundled .nodejs .nodelog .diff .chromelog
 .INTERMEDIATE: %.ugly
 
 vpath %.log 			./log
@@ -41,11 +41,11 @@ prepare:
 .patched.bundled: mkdir
 	js-beautify -f tmp/$< -o bundled/$@
 
-.bundled.log: mkdir
-	$(NODE) test.nodejs $< >log/$@
+.bundled.nodelog: mkdir
+	$(NODE) node.js $< >log/$@
 
-.bundled.chrome: mkdir
-	cd bundled ; runinchrome $< >$@
+.bundled.chromelog: mkdir
+	cd bundled ; runinchrome ../chrome.js $< >../log/$@
 
 include entry.mk
 include standalone.mk

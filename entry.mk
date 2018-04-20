@@ -9,5 +9,5 @@ entryNo.ugly: main.js modules/hello.js modules/goodbye.js mkdir
 entry.diff: entryYes.bundled entryNo.bundled
 	-cd bundled; diff -w -B -c $^ >$@
 
-entry: entryNo.log entryYes.log entry.diff entryNo.chrome entryYes.chrome
+entry: entryNo.nodelog entryYes.nodelog entry.diff entryNo.chromelog entryYes.chromelog
 
