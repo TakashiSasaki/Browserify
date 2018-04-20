@@ -45,7 +45,7 @@ prepare:
 	$(NODE) node.js $< >log/$@
 
 .bundled.chromelog: mkdir
-	cd bundled ; runinchrome ../chrome.js $< >../log/$@
+	cd bundled ; runinchrome $< ../chrome.js >../log/$@
 
 entryYes.ugly: main.js modules/hello.js modules/goodbye.js mkdir
 	browserify --im -o tmp/$@ -e entryMain $^
