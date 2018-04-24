@@ -1,15 +1,26 @@
-.PHONY: screenshot.png all
+.PHONY: all
+.SUFFIXES:
+.SUFFIXES: .bundled .log .js
+	
+vpath %.bundled ../bundled
 
-all: screenshot.png
+all: entry.diff standalone.diff target.diff require.diff
 
-clean:
-	-rm -rf screenshot.png
+clean: 
+	-rm -rf *lighthouse* *.log
 
-screenshot.png: index.html index.css index.js
-	chromium-browser --headless --screenshot --allow-file-access-from-files index.html
+.bundled.log: 
+	runinchrome $< ../node/node.js >$@
 
-prepare:
-	sudo apt-get update; \
-  sudo apt-get upgrade -y ;\
-	sudo apt-get install chromium-browser -y
+entry.diff: entryNo.log entryYes.log
+	-diff -w -B -c $^ >$@
+
+standalone.diff: standaloneNo.log standaloneYes.log
+	-diff -w -B -c $^ >$@
+
+target.diff: targetNo.log targetYes.log
+	-diff -w -B -c $^ >$@
+
+require.diff: requireNo.log requireYes.log
+	-diff -w -B -c $^ >$@
 
