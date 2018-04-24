@@ -5,7 +5,7 @@ log("entry.js\t: start");
 log("entry.js\t: typeof module = " + typeof module);
 
 if(typeof modules === "object") {
-  log("hello.js\t: typeof module.exports = " + typeof module.exports);
+  log("entry.js\t: typeof module.exports = " + typeof module.exports);
 }//if
 
 log("entry.js\t: end");

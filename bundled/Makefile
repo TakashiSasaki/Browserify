@@ -1,6 +1,7 @@
 .PHONY: clean diff
 
 diff: entryYes.diff entryDummy.diff \
+	externalYes.diff externalDummy.diff \
 	standalone.diff \
 	requireYes.diff requireDummy.diff requireHello.diff requireHello.diff requireTarget.diff \
 	target.diff
@@ -12,6 +13,12 @@ entryYes.diff: entryNo.bundled entryYes.bundled
 	-diff -w -B -c $^ >$@
 
 entryDummy.diff :entryNo.bundled entryDummy.bundled
+	-diff -w -B -c $^ >$@
+
+externalYes.diff: externalNo.bundled externalYes.bundled
+	-diff -w -B -c $^ >$@
+
+externalDummy.diff: externalNo.bundled externalDummy.bundled
 	-diff -w -B -c $^ >$@
 
 standalone.diff : standaloneNo.bundled standaloneYes.bundled

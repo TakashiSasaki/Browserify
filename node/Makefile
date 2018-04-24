@@ -4,11 +4,10 @@
 
 vpath %.bundled ../bundled
 
-diff: log entry.diff standalone.diff require.diff target.diff
-
-log: entryNo.log entryYes.log standaloneNo.log standaloneYes.log \
-	requireNo.log requireYes.log requireDummy.log requireHello.log requireTarget.log \
-	targetNo.log targetYes.log \
+diff: log entryYes.diff entryDummy.diff \
+	externalYes.diff externalDummy.diff \
+	requireYes.diff requireDummy.diff requireHello.diff requireTarget.diff\
+	standalone.diff target.diff
 
 clean:
 	-rm -rf *.log
@@ -16,7 +15,16 @@ clean:
 .bundled.log: 
 	NODE_PATH=/usr/local/lib/node_modules:../bundled node node.js $< >$@
 
-entry.diff: entryNo.log entryYes.log
+entryYes.diff: entryNo.log entryYes.log
+	-diff -w -B -c $^ >$@
+
+entryDummy.diff: entryNo.log entryDummy.log
+	-diff -w -B -c $^ >$@
+
+externalYes.diff: externalNo.log externalYes.log
+	-diff -w -B -c $^ >$@
+
+externalDummy.diff: externalNo.log externalDummy.log
 	-diff -w -B -c $^ >$@
 
 requireYes.diff: requireNo.log requireYes.log

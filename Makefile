@@ -6,12 +6,14 @@ vpath %.bundled bundled
 vpath %.patch src
 vpath %.js src
 
-all: bundled
+all: 
+	make bundled ;\
 	make -C bundled ;\
 		make -C chrome ;\
 		make -C node ;
 
 bundled: entryNo.bundled entryYes.bundled entryDummy.bundled \
+	externalNo.bundled externalYes.bundled externalDummy.bundled \
 	standaloneNo.bundled standaloneYes.bundled \
  	requireNo.bundled requireYes.bundled requireDummy.bundled requireHello.bundled requireTarget.bundled \
  	targetNo.bundled targetYes.bundled
@@ -47,14 +49,23 @@ prepare:
 
 IGNORE_MISSING=--im
 
-tmp/entryYes.ugly: main.js hello.js goodbye.js 
+tmp/entryNo.ugly: main.js hello.js goodbye.js 
+	browserify $(IGNORE_MISSING) -o $@ $<
+
+tmp/entryYes.ugly: main.js hello.js goodbye.js entry.js
 	browserify $(IGNORE_MISSING) -o $@ -e src/entry.js $<
 
 tmp/entryDummy.ugly: main.js hello.js goodbye.js
 	browserify $(IGNORE_MISSING) -o $@ -e dummy $<
 
-tmp/entryNo.ugly: main.js hello.js goodbye.js 
+tmp/externalNo.ugly: main.js hello.js goodbye.js 
 	browserify $(IGNORE_MISSING) -o $@ $<
+
+tmp/externalYes.ugly: main.js hello.js goodbye.js external.js
+	browserify $(IGNORE_MISSING) -o $@ -x ./external.js $<
+
+tmp/externalDummy.ugly: main.js hello.js goodbye.js
+	browserify $(IGNORE_MISSING) -o $@ -x dummy $<
 
 tmp/standaloneNo.ugly: main.js hello.js goodbye.js 
 	browserify $(IGNORE_MISSING) -o $@ $< 
