@@ -1,10 +1,4 @@
-function log(s) {
-	if(typeof console === "undefined") {
-		Logger.log(s);
-	} else {
-		console.log(s);
-	}//if
-}//log
+const log = console.log;
 
 log("goodbye.js\t: start");
 

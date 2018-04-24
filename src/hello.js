@@ -1,10 +1,4 @@
-function log(s) {
-	if(typeof console === "undefined") {
-		Logger.log(s);
-	} else {
-		console.log(s);
-	}//if
-}//log
+const log = console.log;
 
 log("hello.js\t: start");
 
@@ -17,7 +11,7 @@ log("hello.js\t: typeof module.exports = " + typeof module.exports);
 
 if(typeof module !== "undefined") {
   module.exports.helloFunction = helloFunction;
-}
+}//if
 
 log("hello.js\t: end");
 
