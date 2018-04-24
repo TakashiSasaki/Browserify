@@ -6,11 +6,14 @@ log("main.js\t: start");
 
 h = undefined;
 try {
-  h = require("helloTarget");
   log("main.js\t: h = require('helloTarget')");
+  h = require("helloTarget");
+  log("main.js\t: h = require('helloTarget') succeeded.");
 } catch (e){
-	h = require("./hello.js");
+  log("main.js\t: h = require('helloTarget') failed");
   log("main.js\t: h = require('./hello.js')");
+	h = require("./hello.js");
+  log("main.js\t: h = require('./hello.js') succeeded.");
 }//try
 log("main.js\t: typeof h = " + typeof h);
 
@@ -21,11 +24,14 @@ if(typeof h === "object") {
 ////////////////////////////////////////////
 var g = undefined;
 try {
-	g = require("goodbyeTarget");
   log("main.js\t: var g = require('goodbyeTarget')");
+	g = require("goodbyeTarget");
+  log("main.js\t: var g = require('goodbyeTarget') succeeded.");
 } catch (e){
-	g = require("./goodbye.js");
+  log("main.js\t: var g = require('goodbyeTarget') failed.");
   log("main.js\t: var g = require('./goodbye.js')");
+	g = require("./goodbye.js");
+  log("main.js\t: var g = require('./goodbye.js') succeeded.");
 }//try
 log("main.js\t: typeof g = " + typeof g);
 
