@@ -1,24 +1,23 @@
-const PREFIX = "module/goodbye.js\t ";
-
 function log(s) {
 	if(typeof console === "undefined") {
-		Logger.log(PREFIX + s);
+		Logger.log(s);
 	} else {
-		console.log(PREFIX + s);
+		console.log(s);
 	}//if
 }//log
 
-log("start");
+log("goodbye.js\t: start");
 
 function goodbyeFunction() {
   log("goodbyeFunction");
 }//goodbyeFunction
 
-log("module = " + typeof module);
-log("module.exports = " + typeof module.exports);
+log("goodbye.js\t: typeof module = " + typeof module);
+log("goodbye.js\t: typeof module.exports = " + typeof module.exports);
 
 if(typeof module !== "undefined") {
   module.exports.goodbyeFunction = goodbyeFunction;
 }//if
 
-log("end");
+log("goodbye.js\t: end");
+

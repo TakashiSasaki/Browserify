@@ -1,47 +1,46 @@
-function log(s,o){
-	if(typeof o === "undefined") {
-		console.log(s);
-	} else if(typeof o === "object" && o !== null) {
-		console.log(s + "\t has " + JSON.stringify(Object.keys(o)));
-  } else {
-		console.log(s + "\t is  " + typeof o);
-	}//if
-}//log
+const log = console.log;
 
-log("start");
+log("main.js\t: start");
 
 ////////////////////////////////////////////
-helloNoVar = undefined;
+
+h = undefined;
 try {
-  helloNoVar = require("helloTarget");
+  h = require("helloTarget");
+  log("main.js\t: h = require('helloTarget')");
 } catch (e){
-	helloNoVar = require("./hello.js");
-}
-log("helloNoVar", helloNoVar);
+	h = require("./hello.js");
+  log("main.js\t: h = require('./hello.js')");
+}//try
+log("main.js\t: typeof h = " + typeof h);
 
 ////////////////////////////////////////////
-var goodbyeTargetVar = undefined;
+var g = undefined;
 try {
-	goodbyeVar = require("goodbyeTarget");
+	g = require("goodbyeTarget");
+  log("main.js\t: var g = require('goodbyeTarget')");
 } catch (e){
-	goodbyeVar = require("./hello.js");
-}
-log("goodbyeVar", goodbyeVar);
+	g = require("./goodbye.js");
+  log("main.js\t: var g = require('./goodbye.js')");
+}//try
+log("main.js\t: typeof g = " + typeof g);
 
 ////////////////////////////////////////////
-log("typeof hello = " + typeof hello);
-log("typeof goodbye = " + typeof goodbye);
+log("main.js\t: typeof hello = " + typeof hello);
+log("main.js\t: typeof goodbye = " + typeof goodbye);
 
+log("main.js\t: function mainFunction");
 function mainFunction(){
-	log("mainFunction");
+	log("main.js\t: I'm mainFunction.");
 }//mainFunction
 
-log("module = " + typeof module);
-log("module.exports = " + typeof module.exports);
+log("main.js\t: typeof module = " + typeof module);
+log("main.js\t: typeof module.exports = " + typeof module.exports);
 
 if(typeof module !== "undefined") {
+  log("main.js\t: module.exports.mainFunction = mainFunction");
 	module.exports.mainFunction = mainFunction;
 }//if
 
-log("end");
+log("main.js\t: end");
 
