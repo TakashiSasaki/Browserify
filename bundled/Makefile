@@ -1,17 +1,32 @@
-.PHONY: clean all
+.PHONY: clean diff
 
-all: entry.diff standalone.diff require.diff target.diff
+diff: entryYes.diff entryDummy.diff \
+	standalone.diff \
+	requireYes.diff requireDummy.diff requireHello.diff requireHello.diff requireTarget.diff \
+	target.diff
 
 clean:
 	-rm -rf *.bundled *.diff
 
-entry.diff: entryYes.bundled entryNo.bundled
+entryYes.diff: entryNo.bundled entryYes.bundled
+	-diff -w -B -c $^ >$@
+
+entryDummy.diff :entryNo.bundled entryDummy.bundled
 	-diff -w -B -c $^ >$@
 
 standalone.diff : standaloneNo.bundled standaloneYes.bundled
 	-diff -w -B -c $^ >$@
 
-require.diff: requireNo.bundled requireYes.bundled 
+requireYes.diff: requireNo.bundled requireYes.bundled 
+	-diff -w -B -c $^ >$@
+
+requireDummy.diff: requireNo.bundled requireDummy.bundled
+	-diff -w -B -c $^ >$@
+
+requireHello.diff: requireNo.bundled requireHello.bundled
+	-diff -w -B -c $^ >$@
+
+requireTarget.diff: requireNo.bundled requireTarget.bundled
 	-diff -w -B -c $^ >$@
 
 target.diff: requireYes.bundled targetYes.bundled 

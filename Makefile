@@ -1,4 +1,4 @@
-.PHONY: prepare clean all bundled
+.PHONY: prepare clean all bundled diff node
 .SUFFIXES: .patched .ugly .js .beautiful .bundled  
 
 vpath %.ugly tmp
@@ -11,10 +11,16 @@ all: bundled
 		make -C chrome ;\
 		make -C node ;
 
-bundled: entryNo.bundled entryYes.bundled \
+bundled: entryNo.bundled entryYes.bundled entryDummy.bundled \
 	standaloneNo.bundled standaloneYes.bundled \
- 	requireNo.bundled requireYes.bundled \
+ 	requireNo.bundled requireYes.bundled requireDummy.bundled requireHello.bundled requireTarget.bundled \
  	targetNo.bundled targetYes.bundled
+
+diff: bundled
+	make -C bundled
+
+node: bundled
+	make -C node
 
 clean:
 	@rm -rf .*.swp *.bundled *.ugly \;
@@ -39,27 +45,41 @@ prepare:
 %.bundled : %.patched
 	js-beautify -f $< -o bundled/$@
 
+IGNORE_MISSING=--im
+
 tmp/entryYes.ugly: main.js hello.js goodbye.js 
-	browserify --im -o $@ -e entryMain $^
+	browserify $(IGNORE_MISSING) -o $@ -e src/entry.js $<
+
+tmp/entryDummy.ugly: main.js hello.js goodbye.js
+	browserify $(IGNORE_MISSING) -o $@ -e dummy $<
 
 tmp/entryNo.ugly: main.js hello.js goodbye.js 
-	browserify --im -o $@ $^
+	browserify $(IGNORE_MISSING) -o $@ $<
 
 tmp/standaloneNo.ugly: main.js hello.js goodbye.js 
-	browserify --im -o $@ $^ 
+	browserify $(IGNORE_MISSING) -o $@ $< 
 
 tmp/standaloneYes.ugly: main.js hello.js goodbye.js 
-	browserify --im -s hoge -o $@ $^
-
-tmp/requireYes.ugly: main.js hello.js goodbye.js 
-	browserify --im -o $@ $< -r ./src/hello.js -r ./src/goodbye.js
+	browserify $(IGNORE_MISSING) -s hoge -o $@ $<
 
 tmp/requireNo.ugly: main.js hello.js goodbye.js 
-	browserify --im -o $@ $<
+	browserify $(IGNORE_MISSING) -o $@ $<
+
+tmp/requireYes.ugly: main.js hello.js goodbye.js 
+	browserify $(IGNORE_MISSING) -o $@ -r $<
+
+tmp/requireDummy.ugly: main.js hello.js goodbye.js
+	browserify $(IGNORE_MISSING) -o $@ $< -r dummy
+
+tmp/requireHello.ugly: main.js hello.js goodbye.js
+	browserify $(IGNORE_MISSING) -o $@ $< -r ./src/hello.js
+
+tmp/requireTarget.ugly: main.js hello.js goodbye.js
+	browserify $(IGNORE_MISSING) -o $@ $< -r ./src/hello.js:helloTarget
 
 tmp/targetYes.ugly: main.js hello.js goodbye.js 
-	browserify --im -o $@ $< -r ./src/hello.js:helloTarget -r ./src/goodbye.js:goodbyeTarget
+	browserify $(IGNORE_MISSING) -o $@ $< -r ./src/hello.js:helloTarget -r ./src/goodbye.js:goodbyeTarget
 
 tmp/targetNo.ugly: main.js hello.js goodbye.js 
-	browserify --im -o $@ $< -r ./src/hello.js -r ./src/goodbye.js
+	browserify $(IGNORE_MISSING) -o $@ $< -r ./src/hello.js -r ./src/goodbye.js
 

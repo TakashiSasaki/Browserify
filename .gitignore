@@ -8,6 +8,7 @@
 *.log
 *.diff
 *lighthouse.*
+*tmp-browserify*
 entryNo.js
 entryYes.js
 requireNo.js

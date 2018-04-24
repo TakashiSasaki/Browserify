@@ -14,6 +14,10 @@ try {
 }//try
 log("main.js\t: typeof h = " + typeof h);
 
+if(typeof h === "object") {
+	log("main.js\t: keys of h = " + JSON.stringify(Object.keys(h)));
+}//if
+
 ////////////////////////////////////////////
 var g = undefined;
 try {
@@ -24,6 +28,10 @@ try {
   log("main.js\t: var g = require('./goodbye.js')");
 }//try
 log("main.js\t: typeof g = " + typeof g);
+
+if(typeof g === "object") {
+	log("main.js\t: keys of g = " + JSON.stringify(Object.keys(g)));
+}//if
 
 ////////////////////////////////////////////
 log("main.js\t: typeof hello = " + typeof hello);
