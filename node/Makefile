@@ -1,10 +1,15 @@
-.PHONY: all
+.PHONY: all log diff
 	
 .SUFFIXES: .bundled .log
 
 vpath %.bundled ../bundled
 
-all: entry.diff require.diff target.diff standalone.diff
+all: log diff
+
+log: entryNo.log entryYes.log standaloneNo.log standaloneYes.log \
+	targetNo.log targetYes.log requireNo.log requireYes.log
+
+diff: entry.diff standalone.diff require.diff target.diff
 
 clean:
 	-rm -rf *.log
@@ -23,4 +28,5 @@ target.diff: targetNo.log targetYes.log
 
 require.diff: requireNo.log requireYes.log
 	-diff -w -B -c $^ >$@
+
 

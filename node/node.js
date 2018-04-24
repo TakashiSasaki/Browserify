@@ -1,29 +1,19 @@
-const log = console.log
+const log = console.log;
 
-log("node.js\t: start");
+log("start");
 
 //log("require " + process.argv[2]);
 
-log("node.js\t: typeof requrie = " + typeof require);
+requireResult = require(process.argv[2]);
 
-if(typeof process !== "undefined") {
-  log("node.js\t: x = require('" + process.argv[2] + "')");
-  x = require(process.argv[2]);
-  log("node.js\t: typeof x = " + typeof x);
-  log("node.js\t: keys of x = " + JSON.stringify(Object.keys(x)));
-}//if
-
+log("node.js\t: z = require('" + process.argv[2] + "')");
+log("node.js\t: typeof z = " + typeof requireResult);
+log("node.js\t: keys of z = " + JSON.stringify(Object.keys(requireResult)));
 log("node.js\t: typeof h = " + typeof h);
 log("node.js\t: typeof g = " + typeof g);
 log("node.js\t: typeof mainFunction = " + typeof mainFunction);
 log("node.js\t: typeof hoge = " + typeof hoge);
-if(typeof hoge === "object") {
-  log("node.js\t: keys of hoge = " + JSON.stringify(Object.keys(hoge)));
-}//if
-
 log("node.js\t: typeof module = " + typeof module);
-if(typeof module === "object!") {
-  log("node.js\t: typeof module.exports = " + typeof module.exports);
-}//if
+log("node.js\t: typeof module.exports = " + typeof module.exports);
 log("node.js\t: end");
 
